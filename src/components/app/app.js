@@ -75,12 +75,12 @@ class App extends Component {
                        charPage={6}
                        />
 
-                    <Col md='6'>
+                    {/* <Col md='6'>
                         <ItemList 
                         getData={this.gotService.getAllBooks}
                         renderItem={(item) => (<><sapn>{item.name}</sapn><button>Click</button></>)}
                         charPage={1}
-                        onCharSelected={this.onCharSelected} />
+                        onCharSelected={this.onItemSelected} />
                     </Col>
                     <Col md='6'>
                         <CharDetails charId={this.state.selectedChar}/>
@@ -91,11 +91,11 @@ class App extends Component {
                         getData={this.gotService.getAllHouses}
                         renderItem={(item) => item.name}
                         charPage={1}
-                        onCharSelected={this.onCharSelected} />
+                        onItemSelected={this.onItemSelected} />
                     </Col>
                     <Col md='6'>
                         <CharDetails charId={this.state.selectedChar}/>
-                    </Col>
+                    </Col> */}
 
                     </Row>
 

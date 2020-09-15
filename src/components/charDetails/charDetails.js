@@ -4,7 +4,7 @@ import GotService from '../../services/GotService';
 import Spinner from '../Spinner';
 import ErrorMessage from '../ErrorMessage';
 
-const CharDetailsMain = styled.div`
+const ItemDetailsMain = styled.div`
     background-color: #fff;
     padding: 25px 25px 15px 25px;
     margin-bottom: 40px;
@@ -53,14 +53,23 @@ const Li = styled.li`
         border: none
     }
 `
+const Field = ({item, field, label}) => {
+    return (
+        <Li>
+            <span className="term">{label}</span>
+            <span>{item[field]}</span>
+        </Li>
+    )
+}
 
+export {Field}
 
-export default class CharDetails extends Component {
+export default class ItemDetails extends Component {
 
     gotService = new GotService();
 
     state = {
-        char: null,
+        item: null,
         loading: false,
         error: false
     }
@@ -111,38 +120,31 @@ export default class CharDetails extends Component {
             return <ErrorMessage/>
         }
 
-        if(!this.state.char) {
-            return <CharDetailsMain>no data to render</CharDetailsMain>;
+        if(!this.state.item) {
+            return <ItemDetailsMain>no data to render</ItemDetailsMain>;
         }
 
         if( this.state.loading) {
             return <Spinner/>
         }
 
-        const {name, gender, born, died, culture} = this.state.char
+        console.log(this.state)
+
+        const {item} = this.state;
+        const {name} = item;
 
         return (
-            <CharDetailsMain>
+            <ItemDetailsMain>
                 <H4>{name}</H4>
                 <Ul>
-                    <Li>
-                        <span className="term">Gender</span>
-                        <span>{gender}</span>
-                    </Li>
-                    <Li>
-                         <span className="term">Born</span>
-                        <span>{born}</span>
-                    </Li>
-                    <Li>
-                        <span className="term">Died</span>
-                        <span>{died}</span>
-                    </Li>
-                    <Li>
-                        <span className="term">Culture</span>
-                        <span>{culture}</span>
-                    </Li>
+                   {
+                        React.Children.map( this.props.children, (child) => {
+                          return React.cloneElement(child, {item})  
+                        })
+                    }
                 </Ul>
-            </CharDetailsMain>
+                
+            </ItemDetailsMain>
         );
     }
 }
