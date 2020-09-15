@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import GotService from '../../services/GotService';
 import Spinner from '../Spinner';
 import ErrorMessage from '../ErrorMessage';
 
@@ -18,12 +17,6 @@ const H4 = styled.h4`
     border-radius: 0.25rem;
     margin-bottom: 20px;
     text-align: center;
-`
-
-const SelectError = styled.div`
-    color: #fff;
-    text-align: center;
-    font-size: 26px;
 `
 
 const Ul = styled.ul`
@@ -66,28 +59,26 @@ export {Field}
 
 export default class ItemDetails extends Component {
 
-    gotService = new GotService();
-
     state = {
         item: null,
         loading: false,
         error: false
     }
 
-    updateChar(){
-        const {charId} = this.props
+    updateData(){
+        const {id} = this.props
 
         this.setState({
             loading: true
         })
 
-        if( !charId){
+        if( !id){
             return;
         }
 
-        this.gotService.getCharacter(charId)
-            .then( (char) => {
-                this.setState({char})
+        this.props.getData(id)
+            .then( (item) => {
+                this.setState({item})
             })
             .then( () => {
                 this.setState({
@@ -99,12 +90,12 @@ export default class ItemDetails extends Component {
     }
 
     componentDidMount(){
-        this.updateChar();
+        this.updateData();
     }
 
     componentDidUpdate(prevProps){
-        if(prevProps.charId !== this.props.charId){
-            this.updateChar();
+        if(prevProps.id !== this.props.id){
+            this.updateData();
         }
     }
 
@@ -124,10 +115,11 @@ export default class ItemDetails extends Component {
             return <ItemDetailsMain>no data to render</ItemDetailsMain>;
         }
 
-        if( this.state.loading) {
+        if(this.state.loading) {
             return <Spinner/>
         }
 
+        console.log('iteDetails state:')
         console.log(this.state)
 
         const {item} = this.state;

@@ -22,12 +22,6 @@ export default class GotService{
         
     }
 
-    getCharacter = async (id) => {
-        //console.log(`api id is ${id}`);
-        const char = await this.getResourse(`/characters/${id}`);
-        return this._transformCharacter(char);
-    }
-
     _transformCharacter = (char) => {
         return {
             name: char.name ? char.name : 'no data :(',
@@ -39,21 +33,41 @@ export default class GotService{
         }
     }
 
+    getCharacter = async (id) => {
+        //console.log(`api id is ${id}`);
+        const char = await this.getResourse(`/characters/${id}`);
+        return this._transformCharacter(char);
+    }
+
     _transformBook = (book) => {
         return {
-            name: book.name ? book.name : 'no data :('
+            name: book.name ? book.name : 'no data :(',
+            id: book.url,
+            authors: book.authors ? book.authors : 'no data: (',
+            isbn: book.isbn ? book.isbn : 'no data :(',
+            numberOfPages: book.numberOfPages ? book.numberOfPages : 'no data :(',
+            country: book.country ? book.country : 'no data :('
+
         }
     }
 
     getAllBooks = async () => {
         const res = await this.getResourse(`/books/`);
+        console.log('getAllBooks res:')
         console.log(res);
-        return res;
+        return res.map(this._transformBook);
+    }
+
+    getBook = async (id) => {
+        //console.log(`api id is ${id}`);
+        const book = await this.getResourse(`/books/${id}`);
+        return this._transformBook(book);
     }
 
     _transformHouse = (house) => {
         return {
             name: house.name ? house.name : 'no data :(',
+
             
         }
     }

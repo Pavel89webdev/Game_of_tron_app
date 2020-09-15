@@ -4,10 +4,9 @@ import Header from '../header';
 import RandomChar from '../randomChar';
 import RandomCharHideButton from '../RandomCharHideButton';
 import ErrorMessage from '../ErrorMessage';
-import CharacterPage from '../CharacterPage';
-import ItemList from '../itemList';
-import CharDetails from '../charDetails';
+import CharacterPage from '../Pages/CharacterPage';
 import GotService from '../../services/GotService';
+import BooksPage from '../../components/Pages/BooksPage'
 
 
 class App extends Component {
@@ -72,30 +71,11 @@ class App extends Component {
                     </RandomCharHideButton>
                     <Row>
                        <CharacterPage
-                       charPage={6}
+                       charPage={12}
                        />
 
-                    {/* <Col md='6'>
-                        <ItemList 
-                        getData={this.gotService.getAllBooks}
-                        renderItem={(item) => (<><sapn>{item.name}</sapn><button>Click</button></>)}
-                        charPage={1}
-                        onCharSelected={this.onItemSelected} />
-                    </Col>
-                    <Col md='6'>
-                        <CharDetails charId={this.state.selectedChar}/>
-                    </Col>
-
-                    <Col md='6'>
-                        <ItemList 
-                        getData={this.gotService.getAllHouses}
-                        renderItem={(item) => item.name}
-                        charPage={1}
-                        onItemSelected={this.onItemSelected} />
-                    </Col>
-                    <Col md='6'>
-                        <CharDetails charId={this.state.selectedChar}/>
-                    </Col> */}
+                        <BooksPage/>
+                   
 
                     </Row>
 

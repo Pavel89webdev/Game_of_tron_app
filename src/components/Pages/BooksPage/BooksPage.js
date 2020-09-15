@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import {Col, Row, Container} from 'reactstrap';
-import ErrorMessage from '../ErrorMessage';
-import ItemList from '../itemList';
-import CharDetails, {Field} from '../charDetails';
-import GotService from '../../services/GotService';
-import RowBlock from '../RowBlock';
+import ErrorMessage from '../../ErrorMessage';
+import ItemList from '../../itemList';
+import ItemDetails, {Field} from '../../ItemDetails';
+import GotService from '../../../services/GotService';
+import RowBlock from '../../RowBlock';
 
 // меняем CharDetails на ItemDetails  и переносим запросы к Api в пропсы \того компонента
 
-export default class CharacterPage extends Component {
+export default class BooksPage extends Component {
 
     gotService = new GotService();
 
@@ -21,7 +20,7 @@ export default class CharacterPage extends Component {
         console.log(`clicked id: ${id}`)
 
         this.setState({
-            selectedItem: `${id.slice(-2)}`
+            selectedItem: `${id.replace(/\D/g, '')}`
         })
 
         console.log(`${this.state.selectedItem}`);
@@ -42,38 +41,40 @@ export default class CharacterPage extends Component {
 
         const itemList = (
             <ItemList
-                getData={() => this.gotService.getAllCharacters(this.props.charPage)} 
-                charPage={this.props.charPage}
+                getData={() => this.gotService.getAllBooks()} 
                 onItemSelected={this.onItemSelected} 
-                renderItem={({name, gender}) => `${name} (${gender})`}
+                renderItem={({name}) => name}
             />
         )
 
-        const charDetails = (
-            <CharDetails charId={this.state.selectedItem}>
+        const bookDetails = (
+            <ItemDetails 
+            id={this.state.selectedItem}
+            getData={this.gotService.getBook}
+            >
                 <Field 
-                    field='gender'
-                    label='Gender' 
+                    field='isbn'
+                    label='Isbn' 
                 />
                 <Field 
-                    field='born'
-                    label='Born' 
+                    field='authors'
+                    label='Authors' 
                 /> 
                 <Field 
-                    field='died'
-                    label='Died' 
+                    field='numberOfPages'
+                    label='NumberOfPages' 
                 />
                 <Field 
-                    field='culture'
-                    label='Culture' 
+                    field='country'
+                    label='Country' 
                 />     
-            </CharDetails>
+            </ItemDetails>
         )
 
         return (
             <RowBlock
                 left={itemList}
-                right={charDetails}
+                right={bookDetails}
             /> )  ;
     }
 }
