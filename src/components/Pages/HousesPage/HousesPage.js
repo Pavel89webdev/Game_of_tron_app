@@ -7,7 +7,7 @@ import RowBlock from '../../RowBlock';
 
 // меняем CharDetails на ItemDetails  и переносим запросы к Api в пропсы \того компонента
 
-export default class HousesPage extends Component {
+export default class BooksPage extends Component {
 
     gotService = new GotService();
 
@@ -41,40 +41,38 @@ export default class HousesPage extends Component {
 
         const itemList = (
             <ItemList
-                getData={() => this.gotService.getAllBooks()} 
+                getData={() => this.gotService.getAllHouses()} 
                 onItemSelected={this.onItemSelected} 
                 renderItem={({name}) => name}
             />
         )
 
-        const bookDetails = (
+        const houseDetails = (
             <ItemDetails 
             id={this.state.selectedItem}
-            getData={this.gotService.getBook}
+            getData={this.gotService.getHouse}
             >
                 <Field 
-                    field='isbn'
-                    label='Isbn' 
+                    field='region'
+                    label='Region' 
                 />
                 <Field 
-                    field='authors'
-                    label='Authors' 
-                /> 
-                <Field 
-                    field='numberOfPages'
-                    label='NumberOfPages' 
+                    field='coatOfArms'
+                    label='coat of arms' 
                 />
-                <Field 
-                    field='country'
-                    label='Country' 
-                />     
+                 <Field 
+                    field='words'
+                    label='Words' 
+                />
+
+                
             </ItemDetails>
         )
 
         return (
             <RowBlock
                 left={itemList}
-                right={bookDetails}
+                right={houseDetails}
             /> )  ;
     }
 }

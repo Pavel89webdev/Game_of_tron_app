@@ -6,7 +6,8 @@ import RandomCharHideButton from '../RandomCharHideButton';
 import ErrorMessage from '../ErrorMessage';
 import CharacterPage from '../Pages/CharacterPage';
 import GotService from '../../services/GotService';
-import BooksPage from '../../components/Pages/BooksPage'
+import BooksPage from '../../components/Pages/BooksPage';
+import HousesPage from '../../components/Pages/HousesPage';
 
 
 class App extends Component {
@@ -75,6 +76,8 @@ class App extends Component {
                        />
 
                         <BooksPage/>
+
+                        <HousesPage/>
                    
 
                     </Row>

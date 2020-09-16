@@ -53,8 +53,6 @@ export default class GotService{
 
     getAllBooks = async () => {
         const res = await this.getResourse(`/books/`);
-        console.log('getAllBooks res:')
-        console.log(res);
         return res.map(this._transformBook);
     }
 
@@ -67,19 +65,21 @@ export default class GotService{
     _transformHouse = (house) => {
         return {
             name: house.name ? house.name : 'no data :(',
-
-            
+            id: house.url ? house.url : 'no data :(',
+            region: house.region ? house.region : 'no data :(',
+            coatOfArms: house.coatOfArms ? house.coatOfArms : 'no data :(',
+            words: house.words ? house.words : 'no data :('            
         }
     }
 
     getAllHouses = async () => {
         const res = await this.getResourse('/houses/');
-        return res;
+        return res.map(this._transformHouse);
     }
 
     getHouse = async (id) => {
         const house = await this.getResourse(`/houses/${id}`);
-        return this.transformHouse(house);
+        return this._transformHouse(house);
     }
 
     //???? что это?
