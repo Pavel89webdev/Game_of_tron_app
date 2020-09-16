@@ -7,7 +7,7 @@ import RowBlock from '../../RowBlock';
 
 // меняем CharDetails на ItemDetails  и переносим запросы к Api в пропсы \того компонента
 
-export default class BooksPage extends Component {
+export default class HousesPage extends Component {
 
     gotService = new GotService();
 
@@ -16,11 +16,11 @@ export default class BooksPage extends Component {
         selectedItem: null
     }
 
-    onItemSelected = (id) =>{
-        console.log(`clicked id: ${id}`)
+    onItemSelected = ({id}) =>{
+        console.log(id)
 
         this.setState({
-            selectedItem: `${id.replace(/\D/g, '')}`
+            selectedItem: id
         })
 
         console.log(`${this.state.selectedItem}`);

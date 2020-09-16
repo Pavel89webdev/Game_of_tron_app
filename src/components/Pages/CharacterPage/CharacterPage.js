@@ -16,11 +16,11 @@ export default class CharacterPage extends Component {
         selectedItem: null
     }
 
-    onItemSelected = (id) =>{
+    onItemSelected = ({id}) =>{
         console.log(`clicked id: ${id}`)
 
         this.setState({
-            selectedItem: `${id.replace(/\D/g, '')}`
+            selectedItem: `${id}`
         })
 
         console.log(`${this.state.selectedItem}`);

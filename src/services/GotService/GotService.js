@@ -1,7 +1,7 @@
 export default class GotService{
 
     constructor() {
-        this._apiBase = 'https://anapioficeandfire.com/api/';
+        this._apiBase = 'https://anapioficeandfire.com/api';
 
     } 
 
@@ -13,6 +13,11 @@ export default class GotService{
         }
 
         return await res.json();
+    }
+
+    _getIdFromUrl = (url) => {
+        const id = url.replace(/\D/g, '')
+        return id;
     }
 
     getAllCharacters = async (page) => {
@@ -29,12 +34,12 @@ export default class GotService{
             born: char.born ? char.born : 'no data :(',
             died: char.died ? char.died : 'no data :(',
             culture: char.culture ? char.culture : 'no data :(',
-            id: char.url 
+            id: this._getIdFromUrl(char.url) 
         }
     }
 
     getCharacter = async (id) => {
-        //console.log(`api id is ${id}`);
+        console.log(`api id is ${id}`);
         const char = await this.getResourse(`/characters/${id}`);
         return this._transformCharacter(char);
     }
@@ -42,7 +47,7 @@ export default class GotService{
     _transformBook = (book) => {
         return {
             name: book.name ? book.name : 'no data :(',
-            id: book.url,
+            id: this._getIdFromUrl(book.url),
             authors: book.authors ? book.authors : 'no data: (',
             isbn: book.isbn ? book.isbn : 'no data :(',
             numberOfPages: book.numberOfPages ? book.numberOfPages : 'no data :(',
@@ -65,7 +70,7 @@ export default class GotService{
     _transformHouse = (house) => {
         return {
             name: house.name ? house.name : 'no data :(',
-            id: house.url ? house.url : 'no data :(',
+            id: this._getIdFromUrl(house.url),
             region: house.region ? house.region : 'no data :(',
             coatOfArms: house.coatOfArms ? house.coatOfArms : 'no data :(',
             words: house.words ? house.words : 'no data :('            

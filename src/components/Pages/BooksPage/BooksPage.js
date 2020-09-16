@@ -1,29 +1,17 @@
 import React, { Component } from 'react';
 import ErrorMessage from '../../ErrorMessage';
 import ItemList from '../../itemList';
-import ItemDetails, {Field} from '../../ItemDetails';
 import GotService from '../../../services/GotService';
-import RowBlock from '../../RowBlock';
+import {withRouter} from 'react-router-dom';
+import {Col} from 'reactstrap';
 
-// меняем CharDetails на ItemDetails  и переносим запросы к Api в пропсы \того компонента
 
-export default class HousesPage extends Component {
+class BooksPage extends Component {
 
     gotService = new GotService();
 
     state = {
         error: false,
-        selectedItem: null
-    }
-
-    onItemSelected = (id) =>{
-        console.log(`clicked id: ${id}`)
-
-        this.setState({
-            selectedItem: `${id.replace(/\D/g, '')}`
-        })
-
-        console.log(`${this.state.selectedItem}`);
     }
 
     componentDidCatch(){
@@ -39,42 +27,21 @@ export default class HousesPage extends Component {
             return <ErrorMessage/>
         }
 
-        const itemList = (
-            <ItemList
+        return (
+            <Col md="6">
+                <ItemList
                 getData={() => this.gotService.getAllBooks()} 
-                onItemSelected={this.onItemSelected} 
+                onItemSelected={
+                    ({id})=>{
+                        console.log(id)
+                        this.props.history.push(`/books/${id}`)
+                    }
+                } 
                 renderItem={({name}) => name}
             />
-        )
-
-        const bookDetails = (
-            <ItemDetails 
-            id={this.state.selectedItem}
-            getData={this.gotService.getBook}
-            >
-                <Field 
-                    field='isbn'
-                    label='Isbn' 
-                />
-                <Field 
-                    field='authors'
-                    label='Authors' 
-                /> 
-                <Field 
-                    field='numberOfPages'
-                    label='NumberOfPages' 
-                />
-                <Field 
-                    field='country'
-                    label='Country' 
-                />     
-            </ItemDetails>
-        )
-
-        return (
-            <RowBlock
-                left={itemList}
-                right={bookDetails}
-            /> )  ;
+            </Col>
+            )  ;
     }
 }
+
+export default withRouter(BooksPage);

@@ -47,7 +47,10 @@ export default class ItemList extends Component {
                 this.setState({
                     itemList
                 })
+                console.log(this.state.itemList)
             } )
+
+       
     }
 
     componentDidCatch(){
@@ -60,13 +63,13 @@ export default class ItemList extends Component {
 
         return (
             arr.map( ( item) =>{
-                const {id} = item; //задать id в сервисе
+                const {id} = item;
                 const label = this.props.renderItem(item)
 
                 return (
                     <Li 
                     key={id}
-                    onClick={() => this.props.onItemSelected(id)}
+                    onClick={() => this.props.onItemSelected({id})}
                     >
                     {label}
                     </Li>

@@ -68,6 +68,8 @@ export default class ItemDetails extends Component {
     updateData(){
         const {id} = this.props
 
+        console.log(id);
+
         this.setState({
             loading: true
         })
@@ -85,8 +87,6 @@ export default class ItemDetails extends Component {
                     loading: false
                 })
             })
-
-        //console.log(`Detail of ID ${charId}`)
     }
 
     componentDidMount(){
