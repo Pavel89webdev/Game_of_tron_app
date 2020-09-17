@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Col, Row, Container} from 'reactstrap';
 import { BrowserRouter as Router, Route} from 'react-router-dom';
+import styled from 'styled-components';
 
 import './app.css';
 
@@ -14,6 +15,14 @@ import BooksPage from '../Pages/BooksPage';
 import HousesPage from '../Pages/HousesPage';
 import BooksItem from '../Pages/BooksItem';
 
+
+const MainTitle = styled.h1`
+    font-size: 5em;
+    margin: 200px auto;
+    background-color: #fff;
+    color: #000;
+    text-align: center;
+`
 
 class App extends Component {
 
@@ -63,22 +72,28 @@ class App extends Component {
                         <Header />
                     </Container>
                     <Container>
-                        <Row>
-                            { (this.state.randomcharHiden) ? 
-                            null :
-                            (
-                                <Col lg={{size: 5, offset: 0}}>
-                                    <RandomChar/>
-                                </Col>
-                            )}
-                        </Row>
-                        <RandomCharHideButton onClick={this.hideShowRandomCharacter} >
-                            Hide random character
-                        </RandomCharHideButton>
-                        <Row>
-                            <Route exact path="/" component={ ()=> <h1>Welcome to GOT DB</h1>} />
+                        
+                            <Route exact path="/" component={ ()=> <MainTitle>Welcome to GOT DB</MainTitle>} />
                             <Route path="/characters">
-                                <CharacterPage charPage={12}/>    
+                                <Row>
+                                    { (this.state.randomcharHiden) ? 
+                                    null :
+                                    (
+                                        <Col lg={{size: 5, offset: 0}}>
+                                            <RandomChar/>
+                                        </Col>
+                                    )}
+                                </Row>
+                                <Row>
+
+                                    <RandomCharHideButton onClick={this.hideShowRandomCharacter} >
+                                    Hide random character
+                                    </RandomCharHideButton>
+                              
+                                </Row>
+
+                                <CharacterPage charPage={12}/> 
+
                             </Route>
                             <Route path="/houses">
                                 <HousesPage/>    
@@ -86,7 +101,6 @@ class App extends Component {
                             <Route exact path="/books">
                                 <BooksPage/>    
                             </Route>
-                        </Row>
                             <Route path="/books/:id" 
                                 render={ 
                                     ({match, location, history}) => {
