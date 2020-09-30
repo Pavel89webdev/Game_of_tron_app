@@ -23,7 +23,7 @@ export default class CharacterPage extends Component {
             selectedItem: `${id}`
         })
 
-        console.log(`${this.state.selectedItem}`);
+        console.log(this.state.selectedItem); //что-то этот ИД не передается в ItemDetails ??? (а в BooksPage передается?)
     }
 
     componentDidCatch(){

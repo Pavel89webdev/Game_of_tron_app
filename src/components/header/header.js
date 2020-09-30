@@ -31,17 +31,17 @@ const Header = () => {
     return (
         <HeaderBlock>
             <HeaderTitle>
-                <Link to="/">Game of Trones DB</Link>
+                <Link to="/got-db">Game of Trones DB</Link>
             </HeaderTitle>
             <HeaderLinks>
                 <li>
-                    <Link to="/characters">Characters</Link>
+                    <Link to="/got-db/characters">Characters</Link>
                 </li>
                 <li>
-                    <Link to="/houses">Houses</Link>
+                    <Link to="/got-db/houses">Houses</Link>
                 </li>
                 <li>
-                    <Link to="/books">Books</Link> 
+                    <Link to="/got-db/books">Books</Link> 
                 </li>
             </HeaderLinks>
         </HeaderBlock>

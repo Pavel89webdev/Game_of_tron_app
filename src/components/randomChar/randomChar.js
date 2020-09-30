@@ -7,6 +7,7 @@ import ErrorMessage from '../ErrorMessage';
 export default class RandomChar extends Component {
 
     state = {
+        char: {}, //not use it,s create inly for lesson for testing
         name: null,
         gender: null,
         born: null,

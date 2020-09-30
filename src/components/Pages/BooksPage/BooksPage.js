@@ -34,7 +34,7 @@ class BooksPage extends Component {
                 onItemSelected={
                     ({id})=>{
                         console.log(id)
-                        this.props.history.push(`/books/${id}`)
+                        this.props.history.push(`/got-db/books/${id}`)
                     }
                 } 
                 renderItem={({name}) => name}

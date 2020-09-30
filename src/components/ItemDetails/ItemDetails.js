@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import Spinner from '../Spinner';
 import ErrorMessage from '../ErrorMessage';
@@ -57,86 +57,67 @@ const Field = ({item, field, label}) => {
 
 export {Field}
 
-export default class ItemDetails extends Component {
+function ItemDetails({id, getData, children}) {
 
-    state = {
-        item: null,
-        loading: false,
-        error: false
-    }
+    const[item, setItem] = useState(null);
+    const[loading, setLoading] = useState(false);
+    const[error, setError] = useState(false);
 
-    updateData(){
-        const {id} = this.props
+    function updateData(){
 
-        console.log(id);
+        console.log('update is running');
+        console.log(typeof(id))
 
-        this.setState({
-            loading: true
-        })
+        setLoading(true);
 
-        if( !id){
+        if( !id ){
             return;
         }
 
-        this.props.getData(id)
+        getData( id )
             .then( (item) => {
-                this.setState({item})
+                setItem(item) //? деструктурировать тут или нет?
             })
             .then( () => {
-                this.setState({
-                    loading: false
-                })
+                setLoading(false)
             })
-    }
-
-    componentDidMount(){
-        this.updateData();
-    }
-
-    componentDidUpdate(prevProps){
-        if(prevProps.id !== this.props.id){
-            this.updateData();
-        }
-    }
-
-    componentDidCatch(){
-        this.setState({
-            error: true
-        })
-    }
-
-    render() {
-
-        if(this.state.error){
-            return <ErrorMessage/>
+            .catch( () => {
+                setError(true)
+            })
         }
 
-        if(!this.state.item) {
-            return <ItemDetailsMain>no data to render</ItemDetailsMain>;
-        }
+    useEffect( () => {
+        updateData();
+        console.log(item);
+    }, [id])
 
-        if(this.state.loading) {
-            return <Spinner/>
-        }
-
-        console.log('iteDetails state:')
-        console.log(this.state)
-
-        const {item} = this.state;
-        const {name} = item;
-
-        return (
-            <ItemDetailsMain>
-                <H4>{name}</H4>
-                <Ul>
-                   {
-                        React.Children.map( this.props.children, (child) => {
-                          return React.cloneElement(child, {item})  
-                        })
-                    }
-                </Ul>
-                
-            </ItemDetailsMain>
-        );
+    if(error){
+        return <ErrorMessage/>
     }
+
+    if(!item) {
+        return <ItemDetailsMain>no data to render</ItemDetailsMain>;
+    }
+
+    if(loading) {
+        return <Spinner/>
+    }
+
+    const name = item.name;
+
+    return (
+        <ItemDetailsMain>
+            <H4>{name}</H4>
+            <Ul>
+                {
+                    React.Children.map( children, (child) => {
+                        return React.cloneElement(child, {item})  
+                    })
+                }
+            </Ul>
+            
+        </ItemDetailsMain>
+    );
 }
+
+export default ItemDetails;

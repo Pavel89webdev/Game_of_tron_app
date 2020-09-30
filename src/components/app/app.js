@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Col, Row, Container} from 'reactstrap';
-import { BrowserRouter as Router, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
 import styled from 'styled-components';
 
 import './app.css';
@@ -72,48 +72,54 @@ class App extends Component {
                         <Header />
                     </Container>
                     <Container>
-                        
-                            <Route exact path="/" component={ ()=> <MainTitle>Welcome to GOT DB</MainTitle>} />
-                            <Route path="/characters">
-                                <Row>
-                                    { (this.state.randomcharHiden) ? 
-                                    null :
-                                    (
-                                        <Col lg={{size: 5, offset: 0}}>
-                                            <RandomChar/>
-                                        </Col>
-                                    )}
-                                </Row>
-                                <Row>
+                            <Switch>
+                                <Route exact path="/got-db" component={ ()=> <MainTitle>Welcome to GOT DB</MainTitle>} />
+                                <Route path="/got-db/characters">
+                                    <Row>
+                                        { (this.state.randomcharHiden) ? 
+                                        null :
+                                        (
+                                            <Col lg={{size: 5, offset: 0}}>
+                                                <RandomChar/>
+                                            </Col>
+                                        )}
+                                    </Row>
+                                    <Row>
 
-                                    <RandomCharHideButton onClick={this.hideShowRandomCharacter} >
-                                    Hide random character
-                                    </RandomCharHideButton>
-                              
-                                </Row>
+                                        <RandomCharHideButton onClick={this.hideShowRandomCharacter} >
+                                        Hide random character
+                                        </RandomCharHideButton>
+                                
+                                    </Row>
 
-                                <CharacterPage charPage={12}/> 
+                                    <CharacterPage charPage={12}/> 
 
-                            </Route>
-                            <Route path="/houses">
-                                <HousesPage/>    
-                            </Route>   
-                            <Route exact path="/books">
-                                <BooksPage/>    
-                            </Route>
-                            <Route path="/books/:id" 
-                                render={ 
-                                    ({match, location, history}) => {
+                                </Route>
+                                <Route path="/got-db/houses">
+                                    <HousesPage/>    
+                                </Route>   
+                                <Route exact path="/got-db/books">
+                                    <BooksPage/>    
+                                </Route>
+                                <Route path="/got-db/books/:id" 
+                                    render={ 
+                                        ({match, location, history}) => {
 
-                                        console.log(match)
-                                        const id = match.params.id
+                                            console.log(match)
+                                            const id = match.params.id
 
-                                        return (
-                                            <BooksItem bookId={id}/>
-                                        )
-                                    }}
-                            />
-                        
+                                            return (
+                                                <BooksItem bookId={id}/>
+                                            )
+                                        }}
+                                />
+                                <Route path="/">
+                                    <MainTitle>404 - this page not found</MainTitle>
+                                    <button>
+                                        <Link to="/got-db">Go to Homepage</Link>
+                                    </button>
+                                </Route>
+                            </Switch>
                     </Container>
                 </div>
             </Router>
